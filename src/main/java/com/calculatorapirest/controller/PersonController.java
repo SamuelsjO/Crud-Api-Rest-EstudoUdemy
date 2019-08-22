@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.calculatorapirest.model.Person;
+import com.calculatorapirest.data.vo.PersonVO;
 import com.calculatorapirest.services.PersonService;
 
 @RestController
@@ -23,28 +23,26 @@ public class PersonController {
 	@Autowired
 	PersonService personServices;
 
-	@GetMapping
-	public List<Person> findAll() {
-
+	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml"})
+	public List<PersonVO> findAll() {
 		return personServices.findAll();
-
 	}
 
-	@GetMapping("/{id}")
-	public Person findById(@PathVariable("id") Long id) {
-
+	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml"})
+	public PersonVO findById(@PathVariable("id") Long id) {
 		return personServices.findById(id);
-
-	}
-	
-	@PostMapping
-	public Person create(@RequestBody Person person) {
-		return personServices.Create(person);
 	}
 
-	@PutMapping
-	public Person update(@RequestBody Person person) {
-		return personServices.update(person);
+	@PostMapping(produces = { "application/json", "application/xml" }, consumes = { "application/json",
+			"application/xml", "application/x-yaml"})
+	public PersonVO create(@RequestBody PersonVO personVO) {
+		return personServices.create(personVO);
+	}
+
+	@PutMapping(produces = { "application/json", "application/xml" }, consumes = { "application/json",
+			"application/xml", "application/x-yaml"})
+	public PersonVO update(@RequestBody PersonVO PersonVO) {
+		return personServices.update(PersonVO);
 	}
 
 	@DeleteMapping("/{id}")
