@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.calculatorapirest.serialization.converter.YamlJackson2HttpMessageConverter;
@@ -17,7 +16,6 @@ import com.calculatorapirest.serialization.converter.YamlJackson2HttpMessageConv
  */
 
 @Configuration
-@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer{
 	
 	private static final MediaType MEDIA_TYPE_YML = MediaType.valueOf("application/x-yaml");
@@ -75,8 +73,8 @@ public class WebConfig implements WebMvcConfigurer{
 		
 		/*
 		 * serializar YAML. localhost:8090/person
-		 */
-		
+		 
+		*/
 		
 		 configurer.favorPathExtension(false)
 		 .favorParameter(false)

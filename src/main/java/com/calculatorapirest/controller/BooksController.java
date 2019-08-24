@@ -16,58 +16,54 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.calculatorapirest.data.vo.PersonVO;
-import com.calculatorapirest.services.PersonService;
+import com.calculatorapirest.data.vo.BooksVO;
+import com.calculatorapirest.services.BooksService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
-@Api(value = "Person Endpoint", description = "Description for person", tags = {"PersonEndpoint"})
 @RestController
-@RequestMapping("/person")
-public class PersonController {
+@RequestMapping("/books")
+public class BooksController {
 
 	@Autowired
-	PersonService personServices;
+	BooksService booksServices;
 
-	@ApiOperation(value = "Find All people recorded")
 	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
-	public List<PersonVO> findAll() {
-		List<PersonVO> persons = personServices.findAll();
-		persons.stream()
+	public List<BooksVO> findAll() {
+		List<BooksVO> books = booksServices.findAll();
+		books.stream()
 				.forEach(p -> p.add(
-						linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()
+						linkTo(methodOn(BooksController.class).findById(p.getKey())).withSelfRel()
 						)
 					);
-		return persons;
+		return books;
 	}
 
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
-	public PersonVO findById(@PathVariable("id") Long id) {
-		PersonVO personVO = personServices.findById(id);
-		personVO.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
-		return personVO;
+	public BooksVO findById(@PathVariable("id") Long id) {
+		BooksVO booksVO = booksServices.findById(id);
+		booksVO.add(linkTo(methodOn(BooksController.class).findById(id)).withSelfRel());
+		return booksVO;
 	}
 
 	@PostMapping(produces = { "application/json", "application/xml" }, consumes = { "application/json",
 			"application/xml", "application/x-yaml" })
-	public PersonVO create(@RequestBody PersonVO person) {
-		PersonVO personVO = personServices.create(person);
-		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
-		return personVO;
+	public BooksVO create(@RequestBody BooksVO books) {
+		BooksVO booksVO = booksServices.create(books);
+		booksVO.add(linkTo(methodOn(BooksController.class).findById(booksVO.getKey())).withSelfRel());
+		return booksVO;
 	}
 
 	@PutMapping(produces = { "application/json", "application/xml" }, consumes = { "application/json",
 			"application/xml", "application/x-yaml" })
-	public PersonVO update(@RequestBody PersonVO PersonVO) {
-		PersonVO personVO = personServices.update(PersonVO);
-		personVO.add(linkTo(methodOn(PersonController.class).findById(personVO.getKey())).withSelfRel());
-		return personVO;
+	public BooksVO update(@RequestBody BooksVO books) {
+		BooksVO booksVO = booksServices.update(books);
+		booksVO.add(linkTo(methodOn(BooksController.class).findById(books.getKey())).withSelfRel());
+		return booksVO;
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		personServices.delete(id);
+		booksServices.delete(id);
 		return ResponseEntity.ok().build();
 	}
 }

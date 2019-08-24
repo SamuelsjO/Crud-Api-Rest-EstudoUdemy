@@ -37,7 +37,7 @@ public class PersonService {
 	}
 		
 	public PersonVO update(PersonVO person) {
-		Person entity = repository.findById(person.getId())
+		Person entity = repository.findById(person.getKey())
 				.orElseThrow(() -> new ResourceNotFoundExecption("No records found for this ID"));
 		
 		entity.setFirstName(person.getFirstName());
