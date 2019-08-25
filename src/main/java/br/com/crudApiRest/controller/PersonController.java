@@ -21,7 +21,8 @@ import br.com.crudApiRest.services.PersonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "Person Endpoint", description = "Description for person", tags = {"PersonEndpoint"})
+//@Api(value = "Person Endpoint", description = "Description for person", tags = {"PersonEndpoint"})
+@Api(tags = "Person EndPoint")
 @RestController
 @RequestMapping("/person")
 public class PersonController {
@@ -41,6 +42,7 @@ public class PersonController {
 		return persons;
 	}
 
+	@ApiOperation(value = "Find people by id")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable("id") Long id) {
 		PersonVO personVO = personServices.findById(id);
@@ -48,6 +50,7 @@ public class PersonController {
 		return personVO;
 	}
 
+	@ApiOperation(value = "Create person") 
 	@PostMapping(produces = { "application/json", "application/xml" }, consumes = { "application/json",
 			"application/xml", "application/x-yaml" })
 	public PersonVO create(@RequestBody PersonVO person) {
@@ -56,6 +59,7 @@ public class PersonController {
 		return personVO;
 	}
 
+	@ApiOperation(value = "Update person") 
 	@PutMapping(produces = { "application/json", "application/xml" }, consumes = { "application/json",
 			"application/xml", "application/x-yaml" })
 	public PersonVO update(@RequestBody PersonVO PersonVO) {
@@ -64,6 +68,7 @@ public class PersonController {
 		return personVO;
 	}
 
+	@ApiOperation(value = "Delete person by ID") 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		personServices.delete(id);

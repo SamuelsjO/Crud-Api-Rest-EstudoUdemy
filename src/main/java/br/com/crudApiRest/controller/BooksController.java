@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.crudApiRest.data.vo.BooksVO;
 import br.com.crudApiRest.services.BooksService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
-
+@Api(tags = "Books EndPoint")
 @RestController
 @RequestMapping("/books")
 public class BooksController {
@@ -27,7 +29,8 @@ public class BooksController {
 	@Autowired
 	BooksService booksServices;
 
-	@GetMapping(produces = { "application/json", "application/xml", "application/x-yaml" })
+	@ApiOperation(value = "Find All Books") 
+	@GetMapping(produces = {"application/json", "application/xml", "application/x-yaml"})
 	public List<BooksVO> findAll() {
 		List<BooksVO> books = booksServices.findAll();
 		books.stream()
@@ -38,13 +41,15 @@ public class BooksController {
 		return books;
 	}
 
-	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
+	@ApiOperation(value = "Find Books by ID")
+	@GetMapping(value = "/{id}", produces = {"application/json", "application/xml", "application/x-yaml"})
 	public BooksVO findById(@PathVariable("id") Long id) {
 		BooksVO booksVO = booksServices.findById(id);
 		booksVO.add(linkTo(methodOn(BooksController.class).findById(id)).withSelfRel());
 		return booksVO;
 	}
 
+	@ApiOperation(value = "Create Books")
 	@PostMapping(produces = { "application/json", "application/xml" }, consumes = { "application/json",
 			"application/xml", "application/x-yaml" })
 	public BooksVO create(@RequestBody BooksVO books) {
@@ -53,6 +58,7 @@ public class BooksController {
 		return booksVO;
 	}
 
+	@ApiOperation(value = "Update books")
 	@PutMapping(produces = { "application/json", "application/xml" }, consumes = { "application/json",
 			"application/xml", "application/x-yaml" })
 	public BooksVO update(@RequestBody BooksVO books) {
@@ -61,6 +67,7 @@ public class BooksController {
 		return booksVO;
 	}
 
+	@ApiOperation(value = "Delete Books")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		booksServices.delete(id);

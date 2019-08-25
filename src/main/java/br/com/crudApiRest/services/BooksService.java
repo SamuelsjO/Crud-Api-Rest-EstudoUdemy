@@ -46,10 +46,11 @@ public class BooksService {
 		BooksVO vo = DozerConverter.parseObject(bookRepository.save(entity), BooksVO.class);
 		return vo;
 	}	
-	
+
 	public void delete(Long id) {
-		Books entity = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundExecption("No records found for this ID"));
-				
+		Books entity = bookRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundExecption("No records found for this ID"));
+
 		bookRepository.delete(entity);
 	}
 }
