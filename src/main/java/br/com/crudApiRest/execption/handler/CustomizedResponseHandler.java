@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import br.com.crudApiRest.execption.ExceptionResponse;
 import br.com.crudApiRest.execption.ResourceNotFoundExecption;
+import br.com.crudApiRest.execption.InvalidJWTAuthenticationExecption;
 
 
 @ControllerAdvice
@@ -28,6 +29,14 @@ public class CustomizedResponseHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(ResourceNotFoundExecption.class)
 	public final ResponseEntity<ExceptionResponse> handleBadRequestExecptions(Exception ex, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+				request.getDescription(false));
+
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(InvalidJWTAuthenticationExecption.class)
+	public final ResponseEntity<ExceptionResponse> InvalidJWTAuthenticationExecption(Exception ex, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
 				request.getDescription(false));
 
