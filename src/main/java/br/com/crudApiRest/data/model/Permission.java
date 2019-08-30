@@ -28,8 +28,7 @@ public class Permission implements GrantedAuthority, Serializable{
 
 	@Override
 	public String getAuthority() {
-		
-		return null;
+		return this.description;
 	}
 
 	public Long getId() {

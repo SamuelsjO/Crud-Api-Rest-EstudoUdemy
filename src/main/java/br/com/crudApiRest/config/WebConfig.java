@@ -16,26 +16,29 @@ import br.com.crudApiRest.serialization.converter.YamlJackson2HttpMessageConvert
  */
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
-
+public class WebConfig implements WebMvcConfigurer{
+	
 	private static final MediaType MEDIA_TYPE_YML = MediaType.valueOf("application/x-yaml");
-
-	@Override
+	
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(new YamlJackson2HttpMessageConverter());
 	}
-
+	
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("*/**").allowedMethods("GET", "POST", "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE",
-				"CONNECT");
+		registry.addMapping("/**")
+			.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
 	}
-
+	
 	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.favorPathExtension(false).favorParameter(false).ignoreAcceptHeader(false)
-				.useRegisteredExtensionsOnly(false).defaultContentType(MediaType.APPLICATION_JSON)
-				.mediaType("json", MediaType.APPLICATION_JSON).mediaType("xml", MediaType.APPLICATION_XML)
-				.mediaType("x-yaml", MEDIA_TYPE_YML);
-
+	public void configureContentNegotiation(ContentNegotiationConfigurer configurer ) {
+		configurer.favorPathExtension(false)
+		.favorParameter(false)
+		.ignoreAcceptHeader(false)
+		.useRegisteredExtensionsOnly(false)
+		.defaultContentType(MediaType.APPLICATION_JSON)
+		.mediaType("json", MediaType.APPLICATION_JSON)
+		.mediaType("xml", MediaType.APPLICATION_XML)
+		.mediaType("x-yaml", MEDIA_TYPE_YML);
 	}
+
 }

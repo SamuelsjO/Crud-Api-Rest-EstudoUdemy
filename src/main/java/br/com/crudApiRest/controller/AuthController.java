@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.crudApiRest.repository.UserRepository;
 import br.com.crudApiRest.security.AccountCrendialsVO;
 import br.com.crudApiRest.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+@Api(tags = "AuthenticantionEndPoint")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -36,8 +38,10 @@ public class AuthController {
 	UserRepository repository;
 
 	@ApiOperation(value = "Authenticate a user by credential")
-	@PostMapping(value = "/signin", produces = { "application/json", "application/xml" }, consumes = {
-			"application/json", "application/xml", "application/x-yaml" })
+	@SuppressWarnings("rawtypes")
+	@PostMapping(value = "/signin", 
+				produces = { "application/json", "application/xml" }, 
+				consumes = {"application/json", "application/xml", "application/x-yaml" })
 	public ResponseEntity signin(@RequestBody AccountCrendialsVO data) {
 		try {
 
@@ -53,12 +57,12 @@ public class AuthController {
 			if (user != null) {
 				token = jwtTokenProvider.createToken(username, user.getRoles());
 			} else {
-				throw new UsernameNotFoundException("Username " + username + "not found");
+				throw new UsernameNotFoundException("username " + username + "not found");
 			}
 
 			
 			Map<Object, Object> model = new HashMap<>();
-			model.put("Username", username);
+			model.put("username", username);
 			model.put("token", token);
 			
 			return ok(model);

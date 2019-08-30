@@ -20,6 +20,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.JwtException;
 
 @Service
 public class JwtTokenProvider {
@@ -74,12 +75,12 @@ public class JwtTokenProvider {
 
 	public boolean validateToken(String token) {
 		try {
-			Jws<Claims> clains = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-			if (clains.getBody().getExpiration().before(new Date())) {
+			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+			if (claims.getBody().getExpiration().before(new Date())) {
 				return false;
 			}
 			return true;
-		} catch (Exception e) {
+		} catch (JwtException | IllegalArgumentException e) {
 			throw new InvalidJWTAuthenticationExecption("Expired or invalid token");
 		}
 	}

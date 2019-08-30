@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import br.com.crudApiRest.data.model.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-
+public interface UserRepository extends JpaRepository<User, Long>{
+	
 	@Query("SELECT u FROM User u WHERE u.userName =:userName")
 	User findByUsername(@Param("userName") String userName);
+
 }
