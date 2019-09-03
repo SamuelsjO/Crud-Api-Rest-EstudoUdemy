@@ -1,6 +1,6 @@
 # Crud-Api-Rest-EstudoUdemy - PROJETO EM DESENVOLVIMENTO
 
-RESTFul API's do 0 à Nuvem Com Spring Boot 2.1.3 e Docker e deploy na AWS.
+RESTFul API's do 0 à Nuvem Com Spring Boot 2.1.7.RELEASE e Docker e deploy na AWS.
 
 DESCRIPTION:
 
